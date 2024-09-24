@@ -1,0 +1,32 @@
+
+services:
+  web:
+    build:
+      context: ./containers/python
+      dockerfile: Dockerfile
+    container_name: python
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - transcendence_nw
+
+  db:
+    build: 
+      context: ./containers/postgresql
+      dockerfile: Dockerfile
+    container_name: postgresql
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - .env
+    networks:
+      - transcendence_nw
+
+volumes:
+  pgdata:
+
+networks:
+  transcendence_nw:
+    driver: bridge
