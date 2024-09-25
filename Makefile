@@ -8,6 +8,7 @@ all: build
 build:
 	@echo "$(GREEN)Docker Compose Starting!$(NC)"
 	@docker-compose -f docker-compose.yml up --build
+	@docker run -v /media/sf_my_transcendence/backend:/backend backend
 
 clean:
 	@echo "$(RED)Cleaning up containers and volumes...$(NC)"
