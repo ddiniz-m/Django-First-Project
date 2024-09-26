@@ -8,7 +8,6 @@ all: build
 build:
 	@echo "$(GREEN)Docker Compose Starting!$(NC)"
 	@docker-compose -f docker-compose.yml up --build
-	@docker run -v /media/sf_my_transcendence/backend:/backend backend
 
 clean:
 	@echo "$(RED)Cleaning up containers and volumes...$(NC)"
@@ -17,6 +16,7 @@ clean:
 fclean: clean
 	@echo "$(RED)System pruning...$(NC)"
 	@docker system prune -af --volumes --force
+	@rm -rf */*/__pycache__
 
 re: fclean build
 

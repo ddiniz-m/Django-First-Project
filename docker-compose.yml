@@ -3,7 +3,39 @@ services:
   backend:
     build: ./backend
     container_name: backend
+    depends_on:
+      - database
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     volumes:
       - ./backend:/backend
+    networks:
+      - transcendece_nw
+
+  database:
+    image: postgres
+    container_name: postgresql
+    environment:
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_USER: postgres_user
+      POSTGRES_NAME: postgresql
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres_user"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+    networks:
+      - transcendece_nw
+
+networks:
+  transcendece_nw:
+    driver: bridge
+
+volumes:
+  pgdata:
