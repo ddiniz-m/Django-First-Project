@@ -13,10 +13,12 @@ clean:
 	@echo "$(RED)Cleaning up containers and volumes...$(NC)"
 	@docker-compose -f docker-compose.yml down --volumes --rmi all
 
-fclean: clean
+pyclean:
+	@find . -type d -name __pycache__ -exec rm -r {} \+
+
+fclean: clean pyclean
 	@echo "$(RED)System pruning...$(NC)"
 	@docker system prune -af --volumes --force
-	@rm -rf */*/__pycache__
 
 re: fclean build
 
