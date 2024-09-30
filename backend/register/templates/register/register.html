@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html>
+	{% block title %}Create an Account{% endblock %}
+	{% block content %}
+	<form method="POST" class="form-group">
+		{% csrf_token %}
+		<h4>{{form.username.label}}</h4>
+		{{form.username}}
+		<h4>{{form.email.label}}</h4>
+		{{form.email}}
+		<h4>{{form.password1.label}}</h4>
+		{{form.password1}}
+		<h4>{{form.password2.label}}</h4>
+		{{form.password2}}
+		<button type="submit" class="btn btn-success">Register</button>
+	</form>
+	{% endblock %}
+</html>
