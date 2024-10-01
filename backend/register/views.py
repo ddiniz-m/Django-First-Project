@@ -1,4 +1,7 @@
 from django.shortcuts import render, redirect
+from django.views import generic
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 
 # Create your views here.
 
@@ -9,8 +12,15 @@ def register(request):
 		form = RegistrationForm(request.POST)
 		if form.is_valid():
 			form.save()
-		return redirect('polls:index')
+			return redirect('register:user')
 	else:
 		form = RegistrationForm()
 		
 	return render(request, 'register/register.html', {"form":form})
+
+class UsersView(generic.ListView):
+	template_name = "register/user.html"
+	context_object_name = "user_list"
+
+	def get_queryset(self):
+		return User.objects.all()
