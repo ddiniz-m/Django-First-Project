@@ -31,6 +31,9 @@ ALLOWED_HOSTS = ["localhost"]
 # Application definition
 
 INSTALLED_APPS = [
+	'mysite',
+	'login.apps.LoginConfig',
+	'singlepage.apps.SinglepageConfig',
     'polls.apps.PollsConfig',
     'register.apps.RegisterConfig',
     'django.contrib.admin',
