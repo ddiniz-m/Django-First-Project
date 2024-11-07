@@ -1,84 +1,78 @@
 
-window.onpopstate = function (event) {
-	showPage(event.state.page);
-}
-
-function showPage(page){
-	console.log("Show Page: ", page);
-	fetch(`/${page}`)
-	.then((response) => {
-		console.log(response.json());
-		return response.body;
-	})
+function loadHtml(url){
+	url = `static/html/${url}.html`
+	console.log('url: ', url);
+	fetch(url)
+	.then(response => response.text())
 	.then(data => {
-		console.log("Data:", data);
-		document.querySelector('#content').innerHTML = data.innerHTML;
+		console.log("data: ", data);
+		document.getElementById('index').innerHTML = '';
+		document.getElementById('index').innerHTML = data;
 	})
-	.catch(error => console.log("Errors: ", error));
+	.catch(error => {
+		console.error('Error loading html: ', error);
+	});
 }
 
 document.addEventListener("DOMContentLoaded", function() {
 	document.querySelectorAll("button").forEach(button => {
 		button.onclick = function () {
-			const page = this.dataset.pagebutton;
+			let page = this.dataset.pagebutton;
 			// history.pushState({page: page}, "", `/${page}`);
-			showPage(page);
+			loadHtml(page);
 		};
 	});
 });
 
+// const formRegister = document.getElementById("form-register");
+// formRegister?.addEventListener("submit", async function(event) {
 
-const formRegister = document.getElementById("form-register");
-formRegister?.addEventListener("submit", async function(event) {
+// 	const formData = new FormData(event.target);
+// 	console.log()
+// 	fetch(`${page}`, {
+// 		method: 'POST',
+// 		headers: {
+// 			"X-CSRFToken": getCookie('csrftoken'),
+// 			"Accept": "application/json",
+// 		},
+// 		body: formData,
+// 	})
+// 	.then(response => response.json())
+// 	.then(data => {
+// 		console.log("Data:", data);
+// 	});
+// })
 
-	const formData = new FormData(event.target);
+// const formLogin = document.getElementById("form-login");
+// formLogin?.addEventListener("submit", async function(event) {
 
-	fetch(`${page}`, {
-		method: 'POST',
-		headers: {
-			"X-CSRFToken": getCookie('csrftoken'),
-			"Accept": "application/json",
-		},
-		body: formData,
-	})
-	.then(response => response.json())
-	.then(data => {
-		console.log("Data:", data);
-		showPage('success')
-	});
-})
+// 	const formData = new FormData(event.target);
 
-const formLogin = document.getElementById("form-login");
-formLogin?.addEventListener("submit", async function(event) {
+// 	fetch(`${page}`, {
+// 		method: 'POST',
+// 		headers: {
+// 			"X-CSRFToken": getCookie('csrftoken'),
+// 			"Accept": "application/json",
+// 		},
+// 		body: formData,
+// 	})
+// 	.then(response => response.json())
+// 	.then(data => {
+// 		console.log("Data:", data);
+// 	});
+// })
 
-	const formData = new FormData(event.target);
-
-	fetch(`${page}`, {
-		method: 'POST',
-		headers: {
-			"X-CSRFToken": getCookie('csrftoken'),
-			"Accept": "application/json",
-		},
-		body: formData,
-	})
-	.then(response => response.json())
-	.then(data => {
-		console.log("Data:", data);
-		showPage('success')
-	});
-})
-
-function getCookie(name) {
-	let cookieValue = null;
-	if (document.cookie && document.cookie !== '') {
-		const cookies = document.cookie.split(';');
-		for (let i = 0; i < cookies.length; i++) {
-			const cookie = cookies[i].trim();
-			if (cookie.substring(0, name.length + 1) === (name + '=')) {
-				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-				break;
-			}
-		}
-	}
-	return cookieValue;
-}
+// function getCookie(name) {
+// 	let cookieValue = null;
+// 	if (document.cookie && document.cookie !== '') {
+// 		const cookies = document.cookie.split(';');
+// 		for (let i = 0; i < cookies.length; i++) {
+// 			const cookie = cookies[i].trim();
+// 			if (cookie.substring(0, name.length + 1) === (name + '=')) {
+// 				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+// 				break;
+// 			}
+// 		}
+// 	}
+// 	return cookieValue;
+// }

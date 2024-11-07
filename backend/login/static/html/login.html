@@ -1,21 +1,18 @@
-{%load static%}
 {% load crispy_forms_tags %}
-<div data-page="register" id="form-register">
+<div data-page="login">
 	<form method="POST">
-		{% csrf_token %}
-
 		<div class="form-group">
 			<div class="row justify-content-center">
 				<div class="col-6">
-					{{ form | crispy }}
+					{{ loginForm | crispy }}
 				</div>
 			</div>
 		</div>
 		<p align="center">
-			<button type="submit" class="btn btn-success">Register</button>
+			<button type="submit" class="btn btn-success">Login</button>
 		</p>
 		<p align="center">
-			<a href="{% url 'login:login' %}"> Login </a>
+			<a href="javascript:loadHtml('register');"> Register </a>
 		</p>
 	</form>
 </div>

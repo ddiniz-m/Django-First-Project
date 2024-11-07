@@ -1,11 +1,6 @@
-from django.shortcuts import render, redirect
-from django.views import generic
-from django.contrib.auth.models import User
 from django.http import JsonResponse
-
-# Create your views here.
-
 from .forms import RegistrationForm
+from django.templatetags.static import static
 
 def registerView(request):
 	if request.method == "POST":
@@ -15,10 +10,9 @@ def registerView(request):
 			return JsonResponse({'status': 'success'}, status=200)
 		return JsonResponse({'status': 'error', 'errors': form.errors}, status=200)
 			
-	elif request.method == 'GET':
-		form = RegistrationForm()
-		form_html = render_crispy_form(form)
-		return JsonResponse({'form': form_html}, status=200)
+	if request.method == 'GET':
+		html = static('html/register.html')
+		return JsonResponse({'html': html}, status=200)
 	return JsonResponse({'status': 'error'}, status=400)
 
 # class UsersView(generic.ListView):
